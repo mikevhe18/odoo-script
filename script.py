@@ -1,2 +1,2 @@
 for document in records:
-    document.ref = a
+    document.ref = a + "XX"
