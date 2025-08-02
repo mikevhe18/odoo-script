@@ -1,5 +1,5 @@
 for document in records:
     if b:
-        document.ref = a + c
+        document.ref = a + str(c)
     else:
         document.ref = a   
