@@ -1,29 +1,31 @@
 #!/usr/bin/env python3
+"""
+Script Name: check_sequence_template.py
+Author: SSI Development Team
+Date: 2025-08-02
+Description: Script untuk mengecek sequence template dengan pencarian field date yang dinamis
+
+Usage:
+    Script ini dirancang untuk dijalankan dalam Odoo Server Action.
+    Variabel 'record' dan 'UserError' tersedia secara otomatis dalam konteks tersebut.
+
+Dependencies:
+    - Odoo environment (record, UserError)
+    
+Logic:
+    1. Cari field dengan nama "date" terlebih dahulu
+    2. Jika tidak ada, cari semua field dengan tipe Date
+    3. Ambil field date pertama yang ditemukan
+    4. Gunakan sebagai context untuk sequence generation
+"""
+
+# === MAIN SCRIPT LOGIC ===
+# Note: Script ini berjalan dalam konteks Odoo Server Action
+# Variabel 'record' dan 'UserError' sudah tersedia
+
 result = ""
 template = record._get_template_sequence()
-
-# Cari field date yang sesuai
-date_field_value = None
-
-# 1. Prioritas pertama: cari field dengan nama "date"
-if hasattr(record, 'date') and record.date:
-    date_field_value = record.date
-else:
-    # 2. Jika tidak ada field "date", cari field dengan tipe Date
-    date_fields = []
-
-    for field_name, field_obj in record._fields.items():
-        raise UserError(field_obj)
-        if field_obj.ttype == 'date' and getattr(record, field_name, None):
-            date_fields.append((field_name, getattr(record, field_name)))
-    
-    # Ambil data pertama jika ditemukan lebih dari satu
-    if date_fields:
-        date_field_value = date_fields[0][1]
-
-raise UserError(date_field_value or getattr(record, 'date_voucher', None))
-# Gunakan date_field_value atau fallback ke date_voucher jika tersedia
-ctx = {"ir_sequence_date": date_field_value or getattr(record, 'date_voucher', None)}
+ctx = {"ir_sequence_date": record.create_date}
 
 if template:
     result = template.sequence_id.with_context(ctx).next_by_id()
