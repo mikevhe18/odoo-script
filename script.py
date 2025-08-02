@@ -12,7 +12,7 @@ else:
     # 2. Jika tidak ada field "date", cari field dengan tipe Date
     date_fields = []
     for field_name, field_obj in record._fields.items():
-        if field_obj.type == 'date' and getattr(record, field_name, None):
+        if field_obj.ttype == 'date' and getattr(record, field_name, None):
             date_fields.append((field_name, getattr(record, field_name)))
     
     # Ambil data pertama jika ditemukan lebih dari satu
