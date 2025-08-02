@@ -1,2 +1,5 @@
 for document in records:
-    document.ref = a + b + c
+    if b:
+        document.ref = a + c
+    else:
+        document.ref = a   
