@@ -19,6 +19,7 @@ else:
     if date_fields:
         date_field_value = date_fields[0][1]
 
+raise UserError(date_field_value or getattr(record, 'date_voucher', None))
 # Gunakan date_field_value atau fallback ke date_voucher jika tersedia
 ctx = {"ir_sequence_date": date_field_value or getattr(record, 'date_voucher', None)}
 
