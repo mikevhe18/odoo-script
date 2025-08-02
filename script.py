@@ -1,2 +1,2 @@
 for document in records:
-    document.ref = a + "XX"
+    document.ref = a + "02082025"
